@@ -23,6 +23,19 @@
 
 ## **Struktur Project**
 <u> Struktu project menggunakan format **By Feature**</u>
+```
+src
+ ├── main
+ |     ├── java\com\project\example
+ |     |     ├── exception
+ |     |     ├── feature
+ |     |     ├── helper
+ |     |     ├── security
+ |     |     ├── utils
+ |     |     └── ExampleAplication.java
+ |     └── resources
+ └── test
+```
 ### **1. Package Exception**
 Package exception berisikan class java yang berupa kostum exception dan exception handler, sehingga output ketika terjadi runtime error akan selalu menggunakan format data JSON yang selalu sama atributnya.
 
@@ -38,16 +51,18 @@ Package Security berisikan class security config dengan menggunakan Spring Secur
 ### **5. Package Feature**
 Di dalam package feature terdapat package untuk setiap entity yang merepresentasikan suatu tabel. Contoh struktur package post di dalam package feature:
 ```
-post
-├── model
-|    ├── CreatePostRequest.java
-|    └── PostResponse.java
-├── service
-|    ├── PostService.java
-|    └── PostServiceImpl.java
-├── Post.java
-├── PostController.java
-└── PostRepo.java
+feature
+  ├── post
+  |     ├── model
+  |     |    ├── CreatePostRequest.java
+  |     |    └── PostResponse.java
+  |     ├── service
+  |     |    ├── PostService.java
+  |     |    └── PostServiceImpl.java
+  |     ├── Post.java
+  |     ├── PostController.java
+  |     └── PostRepo.java
+  └── ...
 ```
 
 Di dalam package category terdapat package model dan service, serta class Category.java yang merupakan class entity, CategoryController.java yang berisikan Controller untuk menerima request, dan CategoryRepo.java yang mengimplementasikan JPARepository untuk DAO (Data Access Object) ke basis data. 
