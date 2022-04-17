@@ -369,7 +369,7 @@ public class SessionFilter {
 
 ```
 
-### **B. Repo (DAO):**
+### **C. Repo (DAO):**
 ```java
 //PostRepo.java
 //import
