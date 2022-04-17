@@ -27,7 +27,7 @@
 
 ---
 ## **Struktur Project**
-<u> Struktu project menggunakan format **By Feature**</u>
+<u> Basic struktur project menggunakan format **By Feature**</u>
 ```
 src
  ├── main
