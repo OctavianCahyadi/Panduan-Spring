@@ -1,6 +1,10 @@
 # Panduan Spring Boot
 ---
 
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
+![Java](https://img.shields.io/badge/Java-df1e22?logo=java&logoColor=white&logoWidth=10&style=for-the-badge)
+
+
 ## **Konfigurasi Springboot**
 ### 1. Versi
 - Spring Boot : 2.6.x
@@ -16,7 +20,7 @@
 - Modelmapper
 - Jackson-core
 
-### 2. Api Documentation
+### 3. Api Documentation
 - springdoc-openapi-ui
 
 > Untuk dependency setiap project mungkin akan berbeda tergantung dari keperluan dan kegunaan dependency di setiap projectnya.
@@ -376,3 +380,6 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     
 }
 ```
+## **Git-Flow Repository**
+[references](https://nvie.com/posts/a-successful-git-branching-model/)
+
