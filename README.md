@@ -25,6 +25,7 @@
 
 > Untuk dependency setiap project mungkin akan berbeda tergantung dari keperluan dan kegunaan dependency di setiap projectnya.
 
+---
 ## **Struktur Project**
 <u> Struktu project menggunakan format **By Feature**</u>
 ```
@@ -72,6 +73,8 @@ feature
 Di dalam package category terdapat package model dan service, serta class Category.java yang merupakan class entity, CategoryController.java yang berisikan Controller untuk menerima request, dan CategoryRepo.java yang mengimplementasikan JPARepository untuk DAO (Data Access Object) ke basis data. 
 
 Di dalam package model terdapat class-class model yang digunakan untuk mapping data dan juga untuk Data Transfer Object (DTO). Package Service terdapat class CategoryService.java yang merupakan suatu class interface dan CategoryServiceImpl.java yang merupakan class yang mengimplementasikan CategoryService.java.
+
+---
 
 ## **Penulisan Code**
 ### **1. HTTP Status Code:**
@@ -131,6 +134,7 @@ Pembuatan model sebisa mungkin menggunakan fitur DDL Auto yang sudah disediakan 
 ### **6. Konfigurasi environtment:**
 Konfigurasi env menggunakan .properties
 
+---
 
 ## **Konsep Alur Data**
 ### **A. Menggunakan konsep Controller - Service - Data**
@@ -161,6 +165,8 @@ public class ResponseDto <T> {
 ### **C. Menggunakan konsep microservice**
 Dengan menggunakan microservice diharapkan project dapat berjalan secara mandiri tanpa ketergantungan dengan resource lain, sehingga ketika terjadi masalah di service A, service lain tetap masih bisa berjalan walaupun method yang menggunakan get Other Service di service A tidak dapat berjalan. Selain itu setiap service hanya memiliki akses ke satu basis data, sehingga tidak membebani satu resource untuk basis datanya, karena basis data terdistribusi berdasarkan swrvicenya.
 
+---
+
 ## **Contoh Pembuatan Entity**
 ### **A. Penggunaan Entity:**
 Class Entity digunakan untuk mereprentasikan tabel yang ada di basis data ke dalam java object/model. Hal ini membuat class Entity memiliki jumlah atribut yang sama dengan kolom tabel yang direpresentasikan. Di java Spring Boot terdapat fitur Hibernate DDL Auto untuk generate basis data berdasarkan atribut dan konfigurasi (relasi tabel, primary key, foreign key, dll) entity yang ada di project.
@@ -183,10 +189,10 @@ Untuk mempermudah pengembangan aplikasi DDL Auto digunakan sehingga struktur bas
 > Akan berbeda untuk kasus kasus pembuatan entity yang memerlukan data khusus
 
 ### **C. Penamaan Entity:**
-Pastikan penamaan kelas Entity menggunakan format CamelCase yang nantinya akan di generate ke basis data menjadi sebuat tabel dengan format nama tabel snake_case. Contohnya kelas Entity ```NamaEntity``` akan di generate nama tabel di basis data ```nama_entity```.
+Pastikan penamaan kelas Entity menggunakan format CamelCase yang nantinya akan di generate ke basis dengan Hibernate DDL-Auto data menjadi sebuat tabel dengan format nama tabel snake_case. Contohnya kelas Entity ```NamaEntity``` akan di generate nama tabel di basis data ```nama_entity```.
 
 ### **D. Penamaan Atribut:**
-Penamaan atribut pastikan menggunakan format lowerCamelCase yang ketika di generate ke basis data menggunakan DDL Auto akan berubah menjadi format dengan snake_case. Contohnya atribut createdAt akan di ubah menjadi kolom dengan nama created_at;
+Penamaan atribut pastikan menggunakan format lowerCamelCase yang ketika di generate ke basis data menggunakan Hibernate DDL Auto akan berubah menjadi format dengan snake_case. Contohnya atribut createdAt akan di ubah menjadi kolom dengan nama created_at;
 
 > contoh Entity Post:
 ```java
@@ -251,16 +257,14 @@ public class Post {
 }
 ```
 Dari contoh di atas class Entity ```Post``` miliki atribut id, title, content, categories, userId, createdAt, deleted, userDeleteId, deletedAt, dan updatedAt. UserId yang disimpan dalam bentuk UUID karena Entity User ada di project lain (project Auth) yang memiliki basis data yang berbeda sehingga tidak bisa disimpan dalam bentuk Entity.
-Atribut  userId, createdAt, deleted, userDeleteId, deletedAt, dan updatedAt adalah atribut yang selalu ada di setiap Entity untuk menyimpan record data nya. Ketika delete Query tidak benar-benar menghapus record tapi menambahkan penanda deleted (Soft Delete). Deleted dan deletedAt digunakan untuk memfilter Query menggunakan anotasi Spring Boot  sehingga data yang ditampilkan hanya data yang tidak di hapus.
+Atribut  userId, createdAt, deleted, userDeleteId, deletedAt, dan updatedAt adalah atribut yang selalu ada di setiap Entity untuk menyimpan record data nya. Delete Query tidak benar-benar menghapus record tapi menambahkan penanda deleted (Soft Delete) sehingga record data yang di delete masih tetap tersimpan. Deleted dan deletedAt digunakan untuk memfilter Query menggunakan anotasi @FilterDef dan @Filter Spring Boot sehingga data yang ditampilkan hanya data yang tidak di hapus jika status deleted nya false, begitu juga sebaliknya.
 
 ```java
 @FilterDef(name = "deletedFilter", parameters = @ParamDef(name = "isDeleted", type = "boolean"))
 @Filter(name = "deletedFilter", condition = "deleted = :isDeleted")
 ```
-digunakan untuk memfilter get berdasarkan sessionFilter yang dibuat di service
 
-
-
+---
 
 ## **Controller-Service-Repo**
 Ilustrasi alur ringkas get data Post dari Controller - Service - Repo
@@ -380,6 +384,9 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     
 }
 ```
+
+---
+
 ## **Git-Flow Repository**
 [references](https://nvie.com/posts/a-successful-git-branching-model/)
 
