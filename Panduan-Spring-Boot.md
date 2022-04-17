@@ -58,7 +58,7 @@ Di dalam package model terdapat class-class model yang digunakan untuk mapping d
 ### **1. HTTP Status Code:**
 - [Dokumentasi HTTP Status Code RESTFull API](https://restfulapi.net/http-status-codes/)
 ### **2. Penamaan resource URL:**
-- [Dokumentasi penamaan Resource](https://restfulapi.net/http-status-codes/)
+- [Dokumentasi penamaan Resource](https://restfulapi.net/resource-naming/)
 - Contoh sederhana : domain.com/service-name/resource-name/method
 ### **3. Penamaan Object:**
 - Entity/Class/Object Java menggunakan CamelCase
@@ -218,7 +218,6 @@ public class Post {
     @NotNull(message = "deleted cannot be null")
     private Boolean deleted = false;
 
-    @NotNull
     @org.hibernate.annotations.Type(type="pg-uuid")
     private UUID userDeleteId;
 
@@ -245,7 +244,7 @@ digunakan untuk memfilter get berdasarkan sessionFilter yang dibuat di service
 
 
 ## **Controller-Service-Repo**
-Ilustrasi alur ringkas get data Post dari Controller - Service - Repo - Service - Controller
+Ilustrasi alur ringkas get data Post dari Controller - Service - Repo
 ### **A. Controller:**
 ```java
 //PostController.java
@@ -257,14 +256,9 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("/title/{title}")
+    @GetMapping("/title/")
     public ResponseEntity<ResponseDto<PostResponse>> getPostByTitle(@PathVariable("title") String title) {
-        ResponseDto<PostResponse> responseDto = postService.getPostByTitle(title);
-        if(responseDto.getStatus()){
-            return ResponseEntity.ok().body(responseDto);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseDto);
-        }
+        return postService.getPostByTitle(title);
     }
 
 }
@@ -295,7 +289,7 @@ public class PostServiceImpl implements PostService {
     private SessionFilter sessionFilter;
 
     @Override
-    public ResponseDto<PostResponse> getPostByTitle(String title) {
+     public ResponseEntity<ResponseDto<PostResponse>> getPostByTitle(String title) {
         ResponseDto<PostResponse> responseDto = new ResponseDto<>();
         sessionFilter.openSessionFilterDeleted(false);
         Optional<Post> post = postRepo.findByTitle(title);
@@ -304,14 +298,14 @@ public class PostServiceImpl implements PostService {
             responseDto.setStatus(false);
             responseDto.setMessage("Data post dengan title "+ title +" tidak ditemukan");
             responseDto.getErrorMessage().add("Post tidak ditemukan di basis data");
-            return responseDto;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseDto);
         }
         PostResponse postResponse = modelMapper.map(post.get(), PostResponse.class);
         responseDto.setStatus(true);
         responseDto.setMessage("Data post dengan title "+ title +" ditemukan");
         responseDto.setErrorMessage(new ArrayList<>());
         responseDto.setPayload(postResponse);
-        return responseDto;
+        return ResponseEntity.ok().body(responseDto);
     }
     
 }
@@ -356,7 +350,6 @@ public class SessionFilter {
 
 ```
 
-
 ### **B. Repo (DAO):**
 ```java
 //PostRepo.java
@@ -368,11 +361,3 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     
 }
 ```
-
-
-
-
-
-
-
-
