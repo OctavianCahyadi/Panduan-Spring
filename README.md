@@ -129,8 +129,8 @@ Penggunaan Query bisa menggunakan JPA Query Creation, JPQL, Native Query dan pem
 - Procedure Call Query 
     [Dokumentasi Procedure Call](https://www.baeldung.com/spring-data-jpa-stored-procedures)
 
-### **5. Penggunaan DDL-AUTO:**
-Pembuatan model sebisa mungkin menggunakan fitur DDL Auto yang sudah disediakan di Spring Boot untuk efisiensi dalam mengambil data karena konfigurasi di Entity dan Tabel di basis data sama, terutama di relasi antar tabel.
+### **5. Penggunaan Hibernate DDL-AUTO:**
+Pembuatan model sebisa mungkin menggunakan fitur Hibernate DDL-Auto yang sudah disediakan di Spring Boot untuk efisiensi dalam mengambil data karena konfigurasi di Entity dan Tabel di basis data sama, terutama di relasi antar tabel. Dengan menggunakan fitur Hibernate DDL-Auto ini harapkan project bisa menjadi _stateless_ sehingga ketika di build di environtment yang berbeda bisa generate basis data nya sendiri ketika project di run dan tidak bergantung pada schema basis data sebelumnya, sehingga dapat mempermudah proses developtment ketika berada di environtment yang berbeda.
 ### **6. Konfigurasi environtment:**
 Konfigurasi env menggunakan .properties
 
