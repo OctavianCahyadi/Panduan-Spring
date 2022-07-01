@@ -390,3 +390,17 @@ public interface PostRepo extends JpaRepository<Post, Long> {
 ## **Git-Flow Repository**
 [references](https://nvie.com/posts/a-successful-git-branching-model/)
 
+
+---
+
+### **DEA COBA NAMBAH**
+```java
+//PostRepo.java
+//import
+public interface PostRepo extends JpaRepository<Post, Long> {
+
+    //menggunakan JPA Query Creation
+    Optional<Post> findByTitle(String title);
+    
+}
+```
